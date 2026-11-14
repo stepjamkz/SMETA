@@ -102,6 +102,33 @@ currency.addEventListener("change", () => {
   recalculate();
 });
 
+function preparePrint() {
+  recalculate();
+  const number = document.querySelector("#estimate-number").value.trim() || "____";
+  const date = document.querySelector("#estimate-date").value;
+  const formattedDate = /^\d{4}-\d{2}-\d{2}$/.test(date)
+    ? date.split("-").reverse().join(".") : "____";
+  document.querySelector("#print-heading").textContent = `Смета № ${number} от ${formattedDate}`;
+
+  // Обычный текст в печати не обрезается по ширине поля и сохраняет переносы.
+  for (const control of document.querySelectorAll("input, select, textarea")) {
+    let value = control.nextElementSibling;
+    if (!value || !value.classList.contains("print-value")) {
+      value = document.createElement("span");
+      value.className = "print-value";
+      value.setAttribute("aria-hidden", "true");
+      control.insertAdjacentElement("afterend", value);
+    }
+    value.textContent = control.value;
+  }
+}
+
+window.addEventListener("beforeprint", preparePrint);
+document.querySelector("#save-pdf").addEventListener("click", () => {
+  preparePrint();
+  window.print();
+});
+
 const today = new Date();
 document.querySelector("#estimate-date").value = [
   today.getFullYear(),

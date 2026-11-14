@@ -14,14 +14,15 @@
       <h1>Смета за 5 минут</h1>
       <p>Добавьте работы или товары — суммы и итог посчитаются сами.</p>
     </header>
+    <h1 id="print-heading" class="print-only"></h1>
 
     <section class="card" aria-labelledby="details-heading">
       <h2 id="details-heading">Реквизиты</h2>
       <div class="details-grid">
         <label>От кого<input type="text" id="sender" placeholder="Ваше имя или компания"></label>
         <label>Для кого<input type="text" id="recipient" placeholder="Имя клиента или компания"></label>
-        <label>Номер сметы<input type="text" id="estimate-number" placeholder="Например, 001"></label>
-        <label>Дата<input type="date" id="estimate-date"></label>
+        <label class="document-meta">Номер сметы<input type="text" id="estimate-number" placeholder="Например, 001"></label>
+        <label class="document-meta">Дата<input type="date" id="estimate-date"></label>
       </div>
     </section>
 
@@ -52,6 +53,7 @@
       </div>
     </section>
 
+    <div class="totals-group">
     <div class="card breakdown" aria-label="Расчёт итоговой суммы">
       <div class="summary-row"><span>Сумма</span><output id="subtotal">0 ₸</output></div>
       <div class="summary-row" id="discount-row" hidden><span>Скидка</span><output id="discount-amount">0 ₸</output></div>
@@ -63,6 +65,17 @@
       <h2 id="total-heading">Итого к оплате</h2>
       <output id="grand-total" aria-live="polite" aria-atomic="true">0 ₸</output>
     </section>
+    </div>
+
+    <section class="card comment-card" aria-labelledby="comment-heading">
+      <h2 id="comment-heading"><label for="comment">Комментарий</label></h2>
+      <textarea id="comment" rows="4" placeholder="Сроки выполнения, условия оплаты и другие договорённости"></textarea>
+    </section>
+    <p class="print-only signature">Подпись ____________________</p>
+    <div class="print-actions">
+      <button type="button" id="save-pdf" class="print-button">Сохранить PDF</button>
+      <p>В окне печати выберите «Сохранить как PDF».</p>
+    </div>
   </main>
 
   <template id="item-template">
