@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Смета за 5 минут</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <span class="eyebrow">ПРОСТО. ПОНЯТНО. ПО ДЕЛУ.</span>
+      <h1>Смета за 5 минут</h1>
+      <p>Добавьте работы или товары — суммы и итог посчитаются сами.</p>
+    </header>
+    <h1 id="print-heading" class="print-only"></h1>
+
+    <section class="card" aria-labelledby="details-heading">
+      <h2 id="details-heading">Реквизиты</h2>
+      <div class="details-grid">
+        <label>От кого<input type="text" id="sender" placeholder="Ваше имя или компания"></label>
+        <label>Для кого<input type="text" id="recipient" placeholder="Имя клиента или компания"></label>
+        <label class="document-meta">Номер сметы<input type="text" id="estimate-number" placeholder="Например, 001"></label>
+        <label class="document-meta">Дата<input type="date" id="estimate-date"></label>
+      </div>
+    </section>
+
+    <section class="card positions" aria-labelledby="positions-heading">
+      <div class="section-header">
+        <h2 id="positions-heading">Позиции</h2>
+        <span class="section-note">Все суммы в <span id="currency-note">₸</span></span>
+      </div>
+      <table>
+        <caption class="sr-only">Работы и товары в смете</caption>
+        <thead>
+          <tr>
+            <th scope="col">Наименование</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Единица</th>
+            <th scope="col" id="price-heading">Цена, ₸</th>
+            <th scope="col" class="amount-heading">Сумма</th>
+            <th scope="col"><span class="sr-only">Удаление</span></th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+      </table>
+      <button type="button" id="add-item" class="add-button">+ Добавить позицию</button>
+      <div class="calculation-settings" id="calculation-settings">
+        <label>Скидка, %<input type="text" inputmode="decimal" id="discount-rate" value="0" autocomplete="off"></label>
+        <label>НДС, %<input type="text" inputmode="decimal" id="vat-rate" value="0" autocomplete="off"></label>
+        <label>Валюта<select id="currency"><option value="₸">₸</option><option value="₽">₽</option><option value="$">$</option><option value="€">€</option></select></label>
+      </div>
+    </section>
+
+    <div class="totals-group">
+    <div class="card breakdown" aria-label="Расчёт итоговой суммы">
+      <div class="summary-row"><span>Сумма</span><output id="subtotal">0 ₸</output></div>
+      <div class="summary-row" id="discount-row" hidden><span>Скидка</span><output id="discount-amount">0 ₸</output></div>
+      <div class="summary-row" id="discounted-row" hidden><span>Сумма со скидкой</span><output id="discounted-total">0 ₸</output></div>
+      <div class="summary-row" id="vat-row" hidden><span>НДС</span><output id="vat-amount">0 ₸</output></div>
+    </div>
+
+    <section class="total-card" aria-labelledby="total-heading">
+      <h2 id="total-heading">Итого к оплате</h2>
+      <output id="grand-total" aria-live="polite" aria-atomic="true">0 ₸</output>
+    </section>
+    </div>
+
+    <section class="card comment-card" aria-labelledby="comment-heading">
+      <h2 id="comment-heading"><label for="comment">Комментарий</label></h2>
+      <textarea id="comment" rows="4" placeholder="Сроки выполнения, условия оплаты и другие договорённости"></textarea>
+    </section>
+    <p class="print-only signature">Подпись ____________________</p>
+    <div class="print-actions">
+      <button type="button" id="save-pdf" class="print-button">Сохранить PDF</button>
+      <button type="button" id="copy-whatsapp" class="add-button">Скопировать для WhatsApp</button>
+      <button type="button" id="new-estimate" class="add-button">Новая смета</button>
+      <p>В окне печати выберите «Сохранить как PDF».</p>
+    </div>
+    <p id="copy-status" class="action-status" role="status"></p>
+    <p id="draft-status" class="action-status" role="status"></p>
+    <section id="copy-fallback" class="card copy-fallback" hidden>
+      <label for="copy-text">Скопируйте текст вручную</label>
+      <textarea id="copy-text" rows="10" readonly></textarea>
+    </section>
+  </main>
+
+  <template id="item-template">
+    <tr class="item-row">
+      <td class="name-cell"><label><span class="field-label">Наименование</span><input type="text" class="item-name" placeholder="Название работы или товара"></label></td>
+      <td><label><span class="field-label">Количество</span><input type="text" inputmode="decimal" class="item-quantity" placeholder="0" autocomplete="off"></label></td>
+      <td><label><span class="field-label">Единица</span><select class="item-unit"><option value="шт">шт</option><option value="час">час</option><option value="услуга">услуга</option></select></label></td>
+      <td><label><span class="field-label price-label">Цена, ₸</span><input type="text" inputmode="decimal" class="item-price" placeholder="0" autocomplete="off"></label></td>
+      <td class="amount-cell"><span class="field-label">Сумма</span><output class="item-total">0 ₸</output></td>
+      <td class="delete-cell"><button type="button" class="delete-button" aria-label="Удалить позицию">✕</button></td>
+    </tr>
+  </template>
+</body>
+</html>
