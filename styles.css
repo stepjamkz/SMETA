@@ -59,6 +59,7 @@ textarea { display: block; width: 100%; min-width: 44px; min-height: 110px; marg
 .print-actions .add-button { margin-top: 0; }
 .action-status { color: var(--muted); font-size: 14px; }
 .action-status:empty { display: none; }
+.version-note { margin-top: 28px; color: var(--muted); font-size: 12px; text-align: center; }
 .copy-fallback { margin-top: 20px; }
 .copy-fallback[hidden] { display: none; }
 .print-button { padding: 12px 24px; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
@@ -107,7 +108,7 @@ textarea { display: block; width: 100%; min-width: 44px; min-height: 110px; marg
 @media print {
   :root, body { background: #fff; color: #000; font-size: 10pt; }
   .page { width: auto; margin: 0; padding: 0; }
-  .page-header, button, .print-actions, .action-status, .copy-fallback, .calculation-settings, .section-note,
+  .page-header, button, .print-actions, .action-status, .version-note, .copy-fallback, .calculation-settings, .section-note,
   .document-meta, .delete-cell, th:last-child, .field-label,
   input, select, textarea { display: none !important; }
   .print-only, .print-value { display: block; }
